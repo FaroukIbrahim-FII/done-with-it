@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -15,13 +15,7 @@ import Screen from "./Screen";
 import AppText from "./AppText";
 import PickerItem from "./PickerItem";
 
-function AppPicker({
-  selectedItem,
-  onSelectedItem,
-  items,
-  icon,
-  placerholder,
-}) {
+function AppPicker({ selectedItem, onSelectedItem, items, icon, placeholder }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
@@ -35,9 +29,11 @@ function AppPicker({
               style={styles.icon}
             />
           )}
-          <Text style={styles.text}>
-            {selectedItem ? selectedItem : placerholder}
-          </Text>
+          {selectedItem ? (
+            <AppText style={styles.text}> {selectedItem} </AppText>
+          ) : (
+            <AppText style={styles.placeholder}> {placeholder} </AppText>
+          )}
           <MaterialCommunityIcons
             name="chevron-down"
             size={20}
@@ -80,6 +76,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+  },
+  placeholder: {
+    color: colors.mediumGrey,
+    flex: 1,
   },
 });
 
