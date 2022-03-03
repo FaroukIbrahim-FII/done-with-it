@@ -24,9 +24,10 @@ import AccountScreen from "./app/screens/AccountScreen";
 import ListingsScreen from "./app/screens/ListingsScreen";
 import LoginScreen from "./app/screens/LoginScreen";
 import ListingEditScreen from "./app/screens/ListingEditScreen";
+import TestScreen from "./app/screens/TestScreen";
 
 export default function App() {
-  return <MessagesScreen />;
+  return <TestScreen />;
 }
 
 const styles = StyleSheet.create({

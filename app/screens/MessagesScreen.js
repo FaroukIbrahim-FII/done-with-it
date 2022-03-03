@@ -11,8 +11,10 @@ import {
 const initialMessages = [
   {
     id: 1,
-    title: "T1",
-    description: "D1",
+    title:
+      "liuefhcvisuedfnvlkjdefnviufsbvisufbviudfbnsvkdfnvoisjefpvjwerovnsklfjednvkjsldfbviulsdbfviusebfvo;nasoiefvjnpoifdjmv iofdnvoisnviunbferdiuvbsreiovun;sekfjcnvs;udifbhviuefbv",
+    description:
+      "liuefhcvisuedfnvlkjdefnviufsbvisufbviudfbnsvkdfnvoisjefpvjwerovnsklfjednvkjsldfbviulsdbfviusebfvo;nasoiefvjnpoifdjmv iofdnvoisnviunbferdiuvbsreiovun;sekfjcnvs;udifbhviuefbv",
     image: require("../assets/thumbnail.jpeg"),
   },
   {
@@ -32,7 +34,7 @@ function MessagesScreen(props) {
     setMessages(messages.filter((m) => m.id !== message.id));
   };
   return (
-    <Screen style={styles.screen}>
+    <Screen>
       <FlatList
         data={messages}
         keyExtractor={(message) => message.id.toString()}
@@ -63,9 +65,5 @@ function MessagesScreen(props) {
     </Screen>
   );
 }
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-});
+const styles = StyleSheet.create({});
 export default MessagesScreen;
