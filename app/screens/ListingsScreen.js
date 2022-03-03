@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.lightGrey,
     padding: 20,
+    flex: 1,
     // paddingTop: 100,
   },
 });

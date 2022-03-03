@@ -21,6 +21,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     marginBottom: 20,
     overflow: "hidden",
+    shadowColor: colors.mediumGrey,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowRadius: 0,
   },
   image: {
     width: "100%",
