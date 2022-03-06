@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().min(1).required().label("Title"),
   price: Yup.number().required().min(1).max(10000).label("Price"),
   description: Yup.string().label("Description"),
-  category: Yup.string().required().nullable(),
+  category: Yup.object().required().nullable(),
   images: Yup.array().min(1, "Please choose an image."),
 });
 
@@ -108,27 +108,6 @@ function ListingEditScreen(props) {
   }, []);
   return (
     <Screen style={styles.container}>
-      {/* <View style={styles.card}>
-        <FlatList
-          data={imageUri}
-          keyExtractor={(item) => item.index}
-          horizontal
-          inverted
-          renderItem={({ item }) => (
-            <Image source={{ uri: item }} style={styles.image} />
-          )}
-        />
-        <TouchableWithoutFeedback onPress={getImageUri}>
-          <View style={styles.cameraButton}>
-            <Icon
-              name="camera"
-              size={80}
-              iconColor={colors.mediumGrey}
-              backgroundColor={colors.lightGrey}
-            />
-          </View>
-        </TouchableWithoutFeedback> */}
-      {/* </View> */}
       <AppForm
         initialValues={{
           title: "",

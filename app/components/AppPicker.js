@@ -38,7 +38,7 @@ function AppPicker({
             />
           )}
           {selectedItem ? (
-            <AppText style={styles.text}> {selectedItem} </AppText>
+            <AppText style={styles.text}> {selectedItem.title} </AppText>
           ) : (
             <AppText style={styles.placeholder}> {placeholder} </AppText>
           )}
