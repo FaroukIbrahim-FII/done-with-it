@@ -8,16 +8,15 @@ import {
   Image,
 } from "react-native";
 
-import AppButton from "../components/AppButton";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import AppFormPicker from "../components/forms/AppFormPicker";
 import Screen from "../components/Screen";
-import AppPicker from "../components/AppPicker";
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import * as imagePicker from "expo-image-picker";
-import Icon from "../components/Icon";
 import colors from "../config/colors";
 import FormImagePicker from "../components/forms/FormImagePicker";
+import listingApi from "../api/listing";
+import UploadScreen from "./UploadScreen";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().min(1).required().label("Title"),
@@ -85,29 +84,37 @@ const categories = [
 ];
 
 function ListingEditScreen(props) {
-  const [imageUri, setImageUri] = useState([]);
+  const [progress, setProgress] = useState(0);
+  const [uploadVisible, setUplaodVisible] = useState(false);
+
+  const handleSubmit = async (listing, { resetForm }) => {
+    setProgress(0);
+    setUplaodVisible(true);
+    const result = await listingApi.addListing(listing, (progress) =>
+      setProgress(progress)
+    );
+    if (!result.ok) {
+      alert("Could not save the listing");
+      setUplaodVisible(false);
+    }
+
+    resetForm();
+  };
+
   const getCameraRollPermission = async () => {
     const result = await imagePicker.requestMediaLibraryPermissionsAsync();
     if (!result.granted) alert("you need to enable image selection");
-  };
-  const getImageUri = async () => {
-    try {
-      const imageUriList = [...imageUri];
-      const result = await imagePicker.launchImageLibraryAsync();
-
-      if (!result.cancelled) {
-        imageUriList[imageUriList.length] = result.uri;
-        setImageUri(imageUriList);
-      }
-    } catch (error) {
-      console.log("Error getting the image uri");
-    }
   };
   useEffect(() => {
     getCameraRollPermission();
   }, []);
   return (
     <Screen style={styles.container}>
+      <UploadScreen
+        progress={progress}
+        visible={uploadVisible}
+        onDone={() => setUplaodVisible(false)}
+      />
       <AppForm
         initialValues={{
           title: "",
@@ -116,7 +123,7 @@ function ListingEditScreen(props) {
           category: null,
           images: [],
         }}
-        onSubmit={(items) => console.log(items)}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         <FormImagePicker name="images" />

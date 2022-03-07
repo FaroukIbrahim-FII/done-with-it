@@ -1,35 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { Button, FlatList, StyleSheet } from "react-native";
 import Card from "../components/Card";
 
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import routes from "../navigation/routes";
 import listingsApi from "../api/listing";
+import AppText from "../components/AppText";
+import useApi from "../hooks/useApi";
+import ActivityIndicator from "../components/ActivityIndicator";
 
 function ListingsScreen({ navigation }) {
-  const [listings, setListings] = useState();
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState();
+  const getListingsApi = useApi(listingsApi.getListings);
 
   useEffect(() => {
-    request();
+    getListingsApi.request();
   }, []);
-
-  const request = async () => {
-    const response = await listingsApi.getListings();
-
-    if (!response.ok) {
-      alert("there was an error");
-      return;
-    }
-    setListings(response.data);
-  };
 
   return (
     <Screen style={styles.card}>
+      {getListingsApi.error && (
+        <>
+          <AppText> There was an error with getting the data.</AppText>
+          <Button title="Retry" onPress={getListingsApi.request} />
+        </>
+      )}
+      <ActivityIndicator visible={getListingsApi.loading} />
       <FlatList
-        data={listings}
+        data={getListingsApi.data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Card
