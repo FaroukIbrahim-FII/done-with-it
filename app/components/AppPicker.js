@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  Text,
   TouchableWithoutFeedback,
   Modal,
   Button,
   FlatList,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import colors from "../config/colors";
-import defaultStyles from "../config/styles";
 import Screen from "./Screen";
 import AppText from "./AppText";
 import PickerItem from "./PickerItem";

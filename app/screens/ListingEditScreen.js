@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  TouchableWithoutFeedback,
-  Image,
-} from "react-native";
+import { StyleSheet } from "react-native";
+import * as imagePicker from "expo-image-picker";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import AppFormPicker from "../components/forms/AppFormPicker";
 import Screen from "../components/Screen";
 import CategoryPickerItem from "../components/CategoryPickerItem";
-import * as imagePicker from "expo-image-picker";
 import colors from "../config/colors";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import listingApi from "../api/listing";

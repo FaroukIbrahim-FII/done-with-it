@@ -24,11 +24,7 @@ const AppNavigator = () => (
       name={routes.LISTING_ADD}
       component={ListingEditScreen}
       options={{
-        tabBarButton: () => (
-          <NewListingButton
-          // hitSlop={{ top: 80, bottom: 80, left: 50, right: 50 }}
-          />
-        ),
+        tabBarButton: () => <NewListingButton />,
         tabBarIcon: ({ size, color }) => (
           <MaterialCommunityIcons
             name="plus-circle"

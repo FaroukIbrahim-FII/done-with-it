@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 import Icon from "../components/Icon";
@@ -6,8 +6,6 @@ import { ListItem, ListItemSeparator } from "../components/lists";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import routes from "../navigation/routes";
-import AuthContext from "../auth/context";
-import authStorage from "../auth/storage";
 import useAuth from "../auth/useAuth";
 
 const menuItems = [

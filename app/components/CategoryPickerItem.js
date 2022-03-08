@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
+
 import AppText from "./AppText";
 import Icon from "./Icon";
 

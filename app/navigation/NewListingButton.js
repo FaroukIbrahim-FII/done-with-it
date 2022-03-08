@@ -1,8 +1,9 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, Platform } from "react-native";
-import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+
+import colors from "../config/colors";
 import routes from "./routes";
 
 const NewListingButton = () => {

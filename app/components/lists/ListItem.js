@@ -1,11 +1,11 @@
 import React from "react";
 import { Image, StyleSheet, TouchableHighlight, View } from "react-native";
-// import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import colors from "../../config/colors";
 import AppText from "../AppText";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function ListItem({
   image,

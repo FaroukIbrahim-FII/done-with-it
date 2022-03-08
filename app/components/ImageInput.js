@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -6,9 +6,10 @@ import {
   Image,
   Alert,
 } from "react-native";
+import * as imagePicker from "expo-image-picker";
+
 import colors from "../config/colors";
 import Icon from "./Icon";
-import * as imagePicker from "expo-image-picker";
 
 function ImageInput({ imageUri, onChangeImage }) {
   const handlePress = () => {
@@ -36,15 +37,16 @@ function ImageInput({ imageUri, onChangeImage }) {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.container}>
-        {!imageUri && (
+        {!imageUri ? (
           <Icon
             iconColor={colors.mediumGrey}
             name="camera"
             backgroundColor={colors.lightGrey}
             size={80}
           />
+        ) : (
+          <Image source={{ uri: imageUri }} style={styles.image} />
         )}
-        {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
       </View>
     </TouchableWithoutFeedback>
   );
