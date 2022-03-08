@@ -1,29 +1,42 @@
-// import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Dimensions,
-  Text,
-  View,
-  SafeAreaView,
-  StatusBar,
-  Platform,
-  Alert,
-  Button,
-} from "react-native";
-import {
-  useDimensions,
-  useDeviceOrientation,
-} from "@react-native-community/hooks";
-import WelcomeScreen from "./app/screens/WelcomeScreen";
-import ViewImageScreen from "./app/screens/ViewImageScreen";
-import CardScreen from "./app/screens/CardsScreens";
-import ListingDetailsScreen from "./app/screens/ListingDetailsScreen";
-import MessagesScreen from "./app/screens/MessagesScreen";
-import AccountScreen from "./app/screens/AccountScreen";
-import ListingsScreen from "./app/screens/ListingsScreen";
+import { useState } from "react";
+import { StyleSheet, StatusBar, Platform } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import AppLoading from "expo-app-loading";
+
+import AuthNavigator from "./app/navigation/AuthNavigation";
+import defaultTheme from "./app/navigation/navigationTheme";
+import AppNavigator from "./app/navigation/AppNavigation";
+import OfflineNotice from "./app/components/OfflineNotice";
+import AuthContext from "./app/auth/context";
+import authStorage from "./app/auth/storage";
 
 export default function App() {
-  return <ListingsScreen />;
+  const [user, setUser] = useState();
+  const [isReady, setIsReady] = useState();
+
+  const getUser = async () => {
+    const user = await authStorage.getUser();
+    if (user) setUser(user);
+  };
+
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={getUser}
+        onFinish={() => setIsReady(true)}
+        onError={() => console.log("Error starting the app")}
+      />
+    );
+  }
+
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      <OfflineNotice />
+      <NavigationContainer theme={defaultTheme}>
+        {user ? <AppNavigator /> : <AuthNavigator />}
+      </NavigationContainer>
+    </AuthContext.Provider>
+  );
 }
 
 const styles = StyleSheet.create({

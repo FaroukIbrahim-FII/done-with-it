@@ -2,10 +2,11 @@ import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 import Icon from "../components/Icon";
-import ListItem from "../components/ListItem";
+import { ListItem, ListItemSeparator } from "../components/lists";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
-import ListItemSeparator from "../components/ListItemSeparator";
+import routes from "../navigation/routes";
+import useAuth from "../auth/useAuth";
 
 const menuItems = [
   {
@@ -14,6 +15,9 @@ const menuItems = [
       name: "format-list-bulleted",
       backgroundColor: colors.primary,
     },
+    target: {
+      name: "listing",
+    },
   },
   {
     name: "My Messages",
@@ -21,16 +25,21 @@ const menuItems = [
       name: "email",
       backgroundColor: colors.secondary,
     },
+    target: {
+      name: "messages",
+    },
   },
 ];
 
-function AccountScreen(props) {
+function AccountScreen({ navigation }) {
+  const { user, setUser, logOut } = useAuth();
+
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
         <ListItem
-          name="Farouk Ibrahim"
-          subTitle="farouk94i@yahoo.com"
+          name={user["name"]}
+          subTitle={user["email"]}
           x
           image={require("../assets/thumbnail.jpeg")}
         />
@@ -43,6 +52,11 @@ function AccountScreen(props) {
           renderItem={({ item }) => (
             <ListItem
               name={item.name}
+              onPress={
+                item.target.name === "messages"
+                  ? () => navigation.navigate(routes.MESSAGES)
+                  : null
+              }
               IconComponent={
                 <Icon
                   name={item.icon.name}
@@ -56,6 +70,7 @@ function AccountScreen(props) {
       <ListItem
         name="Log Out"
         IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
+        onPress={() => logOut()}
       />
     </Screen>
   );

@@ -1,40 +1,47 @@
-import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import React, { useEffect } from "react";
+import { Button, FlatList, StyleSheet } from "react-native";
 import Card from "../components/Card";
 
 import Screen from "../components/Screen";
 import colors from "../config/colors";
+import routes from "../navigation/routes";
+import listingsApi from "../api/listing";
+import AppText from "../components/AppText";
+import useApi from "../hooks/useApi";
+import ActivityIndicator from "../components/ActivityIndicator";
 
-const listings = [
-  {
-    id: 1,
-    title: "Red jacket for sale",
-    price: 100,
-    image: require("../assets/jacket.jpg"),
-  },
-  {
-    id: 2,
-    title: "Couch in great condition",
-    price: 1000,
-    image: require("../assets/couch.jpg"),
-  },
-];
+function ListingsScreen({ navigation }) {
+  const getListingsApi = useApi(listingsApi.getListings);
 
-function ListingsScreen(props) {
+  useEffect(() => {
+    getListingsApi.request();
+  }, []);
+
   return (
-    <Screen style={styles.card}>
-      <FlatList
-        data={listings}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <Card
-            title={item.title}
-            subTitle={`$${item.price}`}
-            image={item.image}
-          />
+    <>
+      <ActivityIndicator visible={getListingsApi.loading} />
+      <Screen style={styles.card}>
+        {getListingsApi.error && (
+          <>
+            <AppText> There was an error with getting the data.</AppText>
+            <Button title="Retry" onPress={getListingsApi.request} />
+          </>
         )}
-      />
-    </Screen>
+        <FlatList
+          data={getListingsApi.data}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <Card
+              title={item.title}
+              subTitle={`$${item.price}`}
+              imageUrl={item.images[0].url}
+              thumbnailUrl={item.images[0].thumbnailUrl}
+              onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+            />
+          )}
+        />
+      </Screen>
+    </>
   );
 }
 
@@ -42,6 +49,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.lightGrey,
     padding: 20,
+    flex: 1,
     // paddingTop: 100,
   },
 });
