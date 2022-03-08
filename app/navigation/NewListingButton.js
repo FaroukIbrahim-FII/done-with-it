@@ -1,8 +1,7 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Platform } from "react-native";
 import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import routes from "./routes";
 
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     borderColor: colors.white,
     borderWidth: 10,
-    bottom: 20,
+    bottom: Platform.OS === "android" ? 30 : 20,
     width: 80,
     height: 80,
     alignItems: "center",

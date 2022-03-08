@@ -1,14 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, StyleSheet, Modal } from "react-native";
-import AppText from "../components/AppText";
 import * as Progress from "react-native-progress";
 import colors from "../config/colors";
 import LottieView from "lottie-react-native";
 
 function UploadScreen({ onDone, progress = 0, visible = false }) {
-  useEffect(() => {
-    console.log(progress);
-  });
   return (
     <Modal visible={visible}>
       <View style={styles.container}>
@@ -25,11 +21,6 @@ function UploadScreen({ onDone, progress = 0, visible = false }) {
             loop={false}
             style={styles.animation}
             onAnimationFinish={onDone}
-            // source={require("../assets/animations/done.json")}
-            // autPlay
-            // loop={false}
-            // style={styles.animation}
-            // onAnimationFinish={onDone}
           />
         )}
       </View>

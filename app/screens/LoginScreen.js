@@ -13,6 +13,7 @@ import {
 import authApi from "../api/auth";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
+import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -21,17 +22,15 @@ const validationSchema = Yup.object().shape({
 
 function LoginScreen() {
   const [loginFailed, setLoginFailed] = useState(false);
+  const { logIn } = useAuth();
 
-  const { user, setUser } = useContext(AuthContext);
   const handleLogin = async ({ email, password }) => {
     const response = await authApi.login(email, password);
 
     if (!response.ok) return setLoginFailed(true);
 
     setLoginFailed(false);
-    const user = jwtDecode(response.data);
-    setUser(user);
-    authStorage.setToken(response.data);
+    logIn(response.data);
   };
   return (
     <Screen style={styles.container}>
